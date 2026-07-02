@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using HealthcareCRM.Models;
 
 namespace HealthcareCRM.Data
 {
@@ -8,5 +9,7 @@ namespace HealthcareCRM.Data
             : base(options)
         {
         }
+
+        public DbSet<User> Users { get; set; }
     }
 }
