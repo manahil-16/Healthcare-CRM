@@ -1,0 +1,52 @@
+@model IEnumerable<HealthcareCRM.Models.Patient>
+
+@{
+    ViewData["Title"] = "Patients";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Patients</h2>
+        <a asp-action="Create" class="btn btn-primary">+ Add Patient</a>
+    </div>
+
+    <form method="get" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" value="@ViewBag.Search" 
+                   class="form-control" placeholder="Search by name..." />
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Date of Birth</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in Model)
+            {
+                <tr>
+                    <td>@patient.FullName</td>
+                    <td>@patient.Email</td>
+                    <td>@patient.Phone</td>
+                    <td>@patient.Address</td>
+                    <td>@patient.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@patient.Id" 
+                           class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@patient.Id" 
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Delete this patient?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

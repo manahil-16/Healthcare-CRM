@@ -1,0 +1,47 @@
+@model HealthcareCRM.Models.PatientViewModel
+
+@{
+    ViewData["Title"] = "Edit Patient";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h3 class="mb-4">Edit Patient</h3>
+
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                        <input asp-for="Id" type="hidden" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input asp-for="FullName" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Phone</label>
+                            <input asp-for="Phone" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <input asp-for="Address" class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Date of Birth</label>
+                            <input asp-for="DateOfBirth" type="date" class="form-control" />
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100">Update Patient</button>
+                        <a asp-action="Index" class="btn btn-secondary w-100 mt-2">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
