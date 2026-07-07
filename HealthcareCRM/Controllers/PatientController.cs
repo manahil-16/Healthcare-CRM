@@ -138,7 +138,19 @@ public async Task<IActionResult> Index(string search, int page = 1)
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
-        }
+        }// GET: /Patient/Details/5
+public async Task<IActionResult> Details(int id)
+{
+    if (!AuthHelper.IsAuthenticated(_accessor))
+        return RedirectToAction("Login", "Account");
+
+    var patient = await _context.Patients.FindAsync(id);
+
+    if (patient == null)
+        return NotFound();
+
+    return View(patient);
+}
 
         // GET: /Patient/Delete/5
         public async Task<IActionResult> Delete(int id)
