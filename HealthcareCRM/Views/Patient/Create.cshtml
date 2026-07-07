@@ -2,65 +2,74 @@
 
 @{
     ViewData["Title"] = "Add Patient";
-    Layout = null;
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Add Patient</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body style="background:#F4F6F9; min-height:100vh; padding:40px 0;">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body p-4">
-                        <h3 class="mb-4">Add Patient</h3>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
 
-                        <form method="post" action="/Patient/Create">
+            <div class="card shadow">
 
-                            <div class="mb-3">
-                                <label class="form-label">Full Name</label>
-                                <input type="text" name="FullName" class="form-control" placeholder="Enter full name" required />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="email" name="Email" class="form-control" placeholder="Enter email" required />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Phone</label>
-                                <input type="text" name="Phone" class="form-control" placeholder="Enter phone" required />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Address</label>
-                                <input type="text" name="Address" class="form-control" placeholder="Enter address" required />
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Date of Birth</label>
-                                <input type="date" name="DateOfBirth" class="form-control" required />
-                            </div>
-
-                            <button type="submit" class="btn btn-primary w-100 mb-2">
-                                Save Patient
-                            </button>
-
-                            <a href="/Patient" class="btn btn-secondary w-100">
-                                Cancel
-                            </a>
-
-                        </form>
-                    </div>
+                <div class="card-header bg-primary text-white">
+                    <h3>Add Patient</h3>
                 </div>
+
+                <div class="card-body">
+
+                    <form asp-action="Create" method="post">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="FullName" class="form-label"></label>
+                            <input asp-for="FullName" class="form-control" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Phone" class="form-label"></label>
+                            <input asp-for="Phone" class="form-control" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Address" class="form-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DateOfBirth" class="form-label"></label>
+                            <input asp-for="DateOfBirth" type="date" class="form-control" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Save Patient
+                        </button>
+
+                        <a asp-action="Index" class="btn btn-secondary w-100 mt-2">
+                            Cancel
+                        </a>
+
+                    </form>
+
+                </div>
+
             </div>
+
         </div>
     </div>
-</body>
-</html>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
