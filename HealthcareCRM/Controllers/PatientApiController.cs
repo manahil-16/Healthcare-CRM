@@ -75,5 +75,29 @@ namespace HealthcareCRM.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { success = true, data = patient, message = "Patient updated" });
         }
+        // DELETE: api/patients/5
+[HttpDelete("{id}")]
+public async Task<IActionResult> Delete(int id)
+{
+    var patient = await _context.Patients.FindAsync(id);
+
+    if (patient == null)
+    {
+        return NotFound(new
+        {
+            success = false,
+            message = "Patient not found"
+        });
+    }
+
+    _context.Patients.Remove(patient);
+    await _context.SaveChangesAsync();
+
+    return Ok(new
+    {
+        success = true,
+        message = "Patient deleted successfully"
+    });
+}
     }
 }
