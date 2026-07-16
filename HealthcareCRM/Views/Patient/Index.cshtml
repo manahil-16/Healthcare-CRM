@@ -4,49 +4,321 @@
     ViewData["Title"] = "Patients";
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Patients</h2>
-        <a asp-action="Create" class="btn btn-primary">+ Add Patient</a>
+<div class="container-fluid">
+
+    <!-- Header -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show">
+
+        @TempData["Success"]
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
+}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold text-primary mb-1">
+
+                <i class="bi bi-people-fill"></i>
+
+                Patients
+
+            </h2>
+
+            <p class="text-muted">
+
+                Manage all registered patients.
+
+            </p>
+
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary btn-lg">
+
+            + Add Patient
+
+        </a>
+
     </div>
 
-    <form method="get" class="mb-3">
-        <div class="input-group">
-            <input type="text" name="search" value="@ViewBag.Search" 
-                   class="form-control" placeholder="Search by name..." />
-            <button type="submit" class="btn btn-outline-secondary">Search</button>
-        </div>
-    </form>
+    <!-- Statistics -->
 
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Date of Birth</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var patient in Model)
-            {
-                <tr>
-                    <td>@patient.FullName</td>
-                    <td>@patient.Email</td>
-                    <td>@patient.Phone</td>
-                    <td>@patient.Address</td>
-                    <td>@patient.DateOfBirth.ToString("dd/MM/yyyy")</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@patient.Id" 
-                           class="btn btn-sm btn-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@patient.Id" 
-                           class="btn btn-sm btn-danger"
-                           onclick="return confirm('Delete this patient?')">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+
+                        Total Patients
+
+                    </h6>
+
+                    <h2 class="fw-bold">
+
+                        @Model.Count()
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+
+                        New Records
+
+                    </h6>
+
+                    <h2 class="fw-bold text-success">
+
+                        @Model.Count()
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <h6 class="text-muted">
+
+                        Active Records
+
+                    </h6>
+
+                    <h2 class="fw-bold text-info">
+
+                        @Model.Count()
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Search -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+            <form method="get">
+
+                <div class="input-group">
+
+                    <input type="text"
+                           name="search"
+                           value="@ViewBag.Search"
+                           class="form-control"
+                           placeholder="Search by Name, Phone or DOB..." />
+
+                    <button class="btn btn-primary">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Table -->
+
+    <div class="card shadow border-0">
+
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-primary">
+
+                        <tr>
+
+                            <th>Name</th>
+
+                            <th>Email</th>
+
+                            <th>Phone</th>
+
+                            <th>Address</th>
+
+                            <th>DOB</th>
+
+                            <th width="240">Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    @if(Model.Any())
+                    {
+                        @foreach(var patient in Model)
+                        {
+                            <tr>
+
+                                <td>
+
+                                    <strong>@patient.FullName</strong>
+
+                                </td>
+
+                                <td>@patient.Email</td>
+
+                                <td>@patient.Phone</td>
+
+                                <td>@patient.Address</td>
+
+                                <td>@patient.DateOfBirth.ToString("dd MMM yyyy")</td>
+
+                                <td>
+
+                                    <a asp-action="Details"
+                                       asp-route-id="@patient.Id"
+                                       class="btn btn-outline-primary btn-sm">
+
+                                        View
+
+                                    </a>
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@patient.Id"
+                                       class="btn btn-outline-warning btn-sm">
+
+                                        Edit
+
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@patient.Id"
+                                       class="btn btn-outline-danger btn-sm"
+                                       onclick="return confirm('Delete this patient?')">
+
+                                        Delete
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="6" class="text-center p-4">
+
+                                No patients found.
+
+                            </td>
+
+                        </tr>
+                    }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Pagination -->
+
+    @if(ViewBag.TotalPages > 1)
+    {
+        <nav class="mt-4">
+
+            <ul class="pagination justify-content-center">
+
+                @if(ViewBag.CurrentPage>1)
+                {
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           asp-route-page="@(ViewBag.CurrentPage-1)"
+                           asp-route-search="@ViewBag.Search">
+
+                            Previous
+
+                        </a>
+
+                    </li>
+                }
+
+                @for(int i=1;i<=ViewBag.TotalPages;i++)
+                {
+                    <li class="page-item @(i==ViewBag.CurrentPage?"active":"")">
+
+                        <a class="page-link"
+                           asp-route-page="@i"
+                           asp-route-search="@ViewBag.Search">
+
+                            @i
+
+                        </a>
+
+                    </li>
+                }
+
+                @if(ViewBag.CurrentPage<ViewBag.TotalPages)
+                {
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           asp-route-page="@(ViewBag.CurrentPage+1)"
+                           asp-route-search="@ViewBag.Search">
+
+                            Next
+
+                        </a>
+
+                    </li>
+                }
+
+            </ul>
+
+        </nav>
+    }
+
 </div>

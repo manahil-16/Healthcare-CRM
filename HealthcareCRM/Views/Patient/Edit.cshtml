@@ -5,43 +5,101 @@
 }
 
 <div class="container mt-4">
+
     <div class="row justify-content-center">
-        <div class="col-md-6">
+
+<div class="col-lg-6 col-md-8">
             <div class="card shadow">
-                <div class="card-body p-4">
-                    <h3 class="mb-4">Edit Patient</h3>
+
+                <div class="card-header bg-warning">
+                    <h3>Edit Patient</h3>
+                </div>
+
+                <div class="card-body">
 
                     <form asp-action="Edit" method="post">
-                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                        @Html.AntiForgeryToken()
 
                         <input asp-for="Id" type="hidden" />
 
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
                         <div class="mb-3">
-                            <label class="form-label">Full Name</label>
+
+                            <label asp-for="FullName" class="form-label"></label>
+
                             <input asp-for="FullName" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input asp-for="Email" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Phone</label>
-                            <input asp-for="Phone" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Address</label>
-                            <input asp-for="Address" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Date of Birth</label>
-                            <input asp-for="DateOfBirth" type="date" class="form-control" />
+
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+
                         </div>
 
-                        <button type="submit" class="btn btn-warning w-100">Update Patient</button>
-                        <a asp-action="Index" class="btn btn-secondary w-100 mt-2">Cancel</a>
+                        <div class="mb-3">
+
+                            <label asp-for="Email" class="form-label"></label>
+
+                            <input asp-for="Email" class="form-control" />
+
+                            <span asp-validation-for="Email" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label asp-for="Phone" class="form-label"></label>
+
+                            <input asp-for="Phone" class="form-control" />
+
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label asp-for="Address" class="form-label"></label>
+
+                            <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+
+                            <span asp-validation-for="Address" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label asp-for="DateOfBirth" class="form-label"></label>
+
+                            <input asp-for="DateOfBirth" type="date" class="form-control" />
+
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100">
+
+                            Update Patient
+
+                        </button>
+
+                        <a asp-action="Index" class="btn btn-secondary w-100 mt-2">
+
+                            Cancel
+
+                        </a>
+
                     </form>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
+
 </div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

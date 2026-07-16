@@ -6,10 +6,10 @@ namespace HealthcareCRM.Models
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Patient is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Patient is required")]
         public int PatientId { get; set; }
 
-        [Required(ErrorMessage = "Doctor is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Doctor is required")]
         public int DoctorId { get; set; }
 
         [Required(ErrorMessage = "Date and time is required")]

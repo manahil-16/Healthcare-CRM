@@ -28,7 +28,7 @@ namespace HealthcareCRM.Controllers
             if (!string.IsNullOrEmpty(status))
                 appointments = appointments.Where(a => a.Status == status);
 
-            var result = await appointments.ToListAsync();
+            var result = await appointments.OrderByDescending(a => a.AppointmentDate).ToListAsync();
 
             return Ok(new
             {
@@ -53,6 +53,11 @@ namespace HealthcareCRM.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(new { success = false, message = "Invalid data" });
 
+            if (!await _context.Patients.AnyAsync(p => p.Id == model.PatientId))
+                return BadRequest(new { success = false, data = (object?)null, message = "Selected patient does not exist." });
+            if (!await _context.Doctors.AnyAsync(d => d.Id == model.DoctorId && d.IsActive))
+                return BadRequest(new { success = false, data = (object?)null, message = "Selected doctor is unavailable." });
+
             var appointment = new Appointment
             {
                 PatientId = model.PatientId,
@@ -65,7 +70,7 @@ namespace HealthcareCRM.Controllers
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetAll), new
+            return CreatedAtAction(nameof(GetAll), new { id = appointment.Id }, new
             {
                 success = true,
                 data = appointment,
@@ -75,13 +80,15 @@ namespace HealthcareCRM.Controllers
 
         // PUT: api/appointments/5/status
         [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdateStatus(int id, [FromBody] string status)
+        public async Task<IActionResult> UpdateStatus(int id, AppointmentStatusRequest request)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(new { success = false, data = (object?)null, message = "Invalid appointment status." });
             var appointment = await _context.Appointments.FindAsync(id);
             if (appointment == null)
                 return NotFound(new { success = false, message = "Appointment not found" });
 
-            appointment.Status = status;
+            appointment.Status = request.Status;
             await _context.SaveChangesAsync();
 
             return Ok(new
@@ -99,6 +106,11 @@ namespace HealthcareCRM.Controllers
             var appointment = await _context.Appointments.FindAsync(id);
             if (appointment == null)
                 return NotFound(new { success = false, message = "Appointment not found" });
+
+            if (!await _context.Patients.AnyAsync(p => p.Id == model.PatientId))
+                return BadRequest(new { success = false, data = (object?)null, message = "Selected patient does not exist." });
+            if (!await _context.Doctors.AnyAsync(d => d.Id == model.DoctorId && d.IsActive))
+                return BadRequest(new { success = false, data = (object?)null, message = "Selected doctor is unavailable." });
 
             appointment.PatientId = model.PatientId;
             appointment.DoctorId = model.DoctorId;

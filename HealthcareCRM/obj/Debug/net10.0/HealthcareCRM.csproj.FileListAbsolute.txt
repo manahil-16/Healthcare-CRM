@@ -21,7 +21,6 @@ C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\rj
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\scopedcss\bundle\HealthcareCRM.styles.css
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\scopedcss\projectbundle\HealthcareCRM.bundle.scp.css
-C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\compressed\k7z6rw776l-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\compressed\lac4gswqnk-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\compressed\dz8duc7bmr-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\compressed\ti6g2m8cuz-{0}-bqjiyaj88i-bqjiyaj88i.gz
@@ -231,3 +230,4 @@ C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\He
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\HealthcareCRM.sourcelink.json
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\Healthca.990109B5.Up2Date
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\compressed\k7z6rw776l-{0}-95dav4cm24-95dav4cm24.gz

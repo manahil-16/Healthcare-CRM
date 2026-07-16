@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using HealthcareCRM.Models;
 using HealthcareCRM.Data;
 using BCrypt.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthcareCRM.Controllers
 {
@@ -30,9 +31,16 @@ namespace HealthcareCRM.Controllers
 
         // POST: /Account/Register
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
+
+            if (await _context.Users.AnyAsync(u => u.Email == model.Email))
+            {
+                ModelState.AddModelError(nameof(model.Email), "An account with this email already exists.");
+                return View(model);
+            }
 
             // Hash password before saving
             var user = new User
@@ -50,12 +58,12 @@ namespace HealthcareCRM.Controllers
 
         // POST: /Account/Login
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var user = _context.Users
-                .FirstOrDefault(u => u.Email == model.Email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
             {
@@ -63,7 +71,17 @@ namespace HealthcareCRM.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            HttpContext.Session.SetInt32("UserId", user.Id);
+            HttpContext.Session.SetString("UserName", user.FullName);
+            return RedirectToAction("Index", "Patient");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction(nameof(Login));
         }
     }
 }

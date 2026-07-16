@@ -1,0 +1,121 @@
+@model IEnumerable<HealthcareCRM.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Doctors";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Doctors - HealthcareCRM</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body style="background:#F4F6F9; min-height:100vh;">
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand">🏥 HealthcareCRM</a>
+            <div class="d-flex gap-3">
+                <a href="/Patient" class="nav-link">Patients</a>
+                <a href="/Doctor" class="nav-link">Doctors</a>
+                <a href="/Appointment" class="nav-link">Appointments</a>
+                <a href="/Account/Logout" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Doctors</h2>
+            <a href="/Doctor/Create" class="btn btn-primary">+ Add Doctor</a>
+        </div>
+
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">
+                            No doctors found. Click + Add Doctor to add one.
+                        </td>
+                    </tr>
+                }
+                @foreach (var doctor in Model)
+                {
+                    <tr>
+                        <td>@doctor.Id</td>
+                        <td>@doctor.Name</td>
+                        <td>@doctor.Specialization</td>
+                        <td>@doctor.Phone</td>
+                        <td>
+                            @if (doctor.IsActive)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Inactive</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="/Doctor/Edit/@doctor.Id"
+                               class="btn btn-warning btn-sm">Edit</a>
+                            <button type="button"
+                                    class="btn btn-sm @(doctor.IsActive ? "btn-danger" : "btn-success")"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deactivateModal"
+                                    onclick="setDoctorId(@doctor.Id, @doctor.IsActive.ToString().ToLower())">
+                                @(doctor.IsActive ? "Deactivate" : "Reactivate")
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Deactivate Modal -->
+    <div class="modal fade" id="deactivateModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="modalTitle">Confirm Action</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a id="confirmButton" class="btn btn-warning">Confirm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setDoctorId(id, isActive) {
+            document.getElementById("confirmButton").href = "/Doctor/Deactivate/" + id;
+            document.getElementById("modalBody").innerText = isActive
+                ? "Are you sure you want to deactivate this doctor?"
+                : "Are you sure you want to reactivate this doctor?";
+        }
+    </script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
