@@ -29,9 +29,11 @@ public async Task<IActionResult> Index(string? search, int page = 1)
     if (!string.IsNullOrWhiteSpace(search))
     {
         query = query.Where(p =>
-            p.FullName.Contains(search) ||
-            p.Phone.Contains(search) ||
-            p.DateOfBirth.ToString().Contains(search));
+    p.FullName.Contains(search) ||
+    p.Phone.Contains(search) ||
+    p.DateOfBirth.Day.ToString().Contains(search) ||
+    p.DateOfBirth.Month.ToString().Contains(search) ||
+    p.DateOfBirth.Year.ToString().Contains(search));
     }
 
     int totalRecords = await query.CountAsync();
@@ -135,45 +137,26 @@ public async Task<IActionResult> Index(string? search, int page = 1)
             return RedirectToAction(nameof(Index));
         }
 
-       // =======================
-// GET: Patient/Delete/5
-// =======================
+       // GET: /Patient/Delete/5
 public async Task<IActionResult> Delete(int id)
 {
     var patient = await _context.Patients.FindAsync(id);
-
-    if (patient == null)
-        return NotFound();
-
+    if (patient == null) return NotFound();
     return View(patient);
 }
 
-// =======================
-// POST: Patient/Delete/5
-// =======================
-[HttpPost]
+// POST: /Patient/Delete/5
+[HttpPost, ActionName("Delete")]
 [ValidateAntiForgeryToken]
-[ActionName("Delete")]
 public async Task<IActionResult> DeleteConfirmed(int id)
 {
     var patient = await _context.Patients.FindAsync(id);
-
-    if (patient == null)
-        return NotFound();
-
-    if (await HasAppointments(id))
-    {
-        TempData["Error"] = "This patient cannot be deleted because appointments are linked to the record.";
-        return RedirectToAction(nameof(Details), new { id });
-    }
+    if (patient == null) return NotFound();
 
     _context.Patients.Remove(patient);
-
     await _context.SaveChangesAsync();
-
     TempData["Success"] = "Patient deleted successfully.";
-
-    return RedirectToAction(nameof(Index));
+    return RedirectToAction("Index");
 }
     }
 }

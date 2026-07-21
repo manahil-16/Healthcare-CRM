@@ -73,7 +73,7 @@ namespace HealthcareCRM.Controllers
 
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserName", user.FullName);
-            return RedirectToAction("Index", "Patient");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         [HttpPost]

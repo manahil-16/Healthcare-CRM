@@ -230,4 +230,4 @@ C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\He
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\HealthcareCRM.sourcelink.json
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\Healthca.990109B5.Up2Date
 C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll
-C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\compressed\k7z6rw776l-{0}-95dav4cm24-95dav4cm24.gz
+C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\obj\Debug\net10.0\compressed\k7z6rw776l-{0}-elpa37ke3g-elpa37ke3g.gz

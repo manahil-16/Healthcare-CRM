@@ -4,99 +4,64 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HealthcareCRM</title>
-
     <script type="importmap"></script>
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HealthcareCRM.styles.css" asp-append-version="true" />
 </head>
 
-<body class="d-flex flex-column min-vh-100">
-
+<body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark">
-            <div class="container">
+            <div class="container-fluid px-4">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                     HealthcareCRM
                 </a>
-
-                <button class="navbar-toggler"
-                        type="button"
+                <button class="navbar-toggler" type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarNav">
-
                     <ul class="navbar-nav ms-auto">
-
                         <li class="nav-item">
-                            <a class="nav-link"
-                               asp-controller="Home"
-                               asp-action="Index">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
                                 Home
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Appointment" asp-action="Index">Appointments</a>
+                            <a class="nav-link" asp-controller="Appointment" asp-action="Index">
+                                Appointments
+                            </a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link"
-                               asp-controller="Patient"
-                               asp-action="Index">
+                            <a class="nav-link" asp-controller="Patient" asp-action="Index">
                                 Patients
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link"
-                               asp-controller="Doctor"
-                               asp-action="Index">
+                            <a class="nav-link" asp-controller="Doctor" asp-action="Index">
                                 Doctors
                             </a>
                         </li>
-
                     </ul>
                     <form asp-controller="Account" asp-action="Logout" method="post" class="ms-2">
                         <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
                     </form>
-
                 </div>
-
             </div>
         </nav>
     </header>
 
-    <main class="container flex-grow-1 py-4">
-
+    <main class="flex-grow-1 py-4">
         @RenderBody()
-
     </main>
 
-    <footer class="footer mt-auto py-3">
-
-        <div class="container text-center">
-
-            © 2026 HealthcareCRM |
-            <a asp-controller="Home"
-               asp-action="Privacy">
-                Privacy
-            </a>
-
-        </div>
-
-    </footer>
+    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
     @await RenderSectionAsync("Scripts", false)
-
 </body>
-
 </html>

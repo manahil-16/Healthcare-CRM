@@ -1,0 +1,151 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">📊 Dashboard</h2>
+            <p class="text-muted">Welcome to HealthcareCRM</p>
+        </div>
+    </div>
+
+    <!-- Metric Cards -->
+    <div class="row g-4 mb-4" id="statsCards">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="fs-1">👤</div>
+                        <div>
+                            <div class="text-muted small">Total Patients</div>
+                            <div class="fw-bold fs-3" id="totalPatients">...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="fs-1">🩺</div>
+                        <div>
+                            <div class="text-muted small">Active Doctors</div>
+                            <div class="fw-bold fs-3" id="totalDoctors">...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="fs-1">📅</div>
+                        <div>
+                            <div class="text-muted small">Appointments Today</div>
+                            <div class="fw-bold fs-3" id="appointmentsToday">...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="fs-1">⏳</div>
+                        <div>
+                            <div class="text-muted small">Pending Appointments</div>
+                            <div class="fw-bold fs-3 text-warning" id="pendingCount">...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3">Appointment Status Breakdown</h5>
+                    <canvas id="statusChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3">This Week</h5>
+                    <div class="d-flex flex-column gap-3 mt-3">
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                            <span>📅 Appointments This Week</span>
+                            <span class="fw-bold fs-5" id="appointmentsThisWeek">...</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                            <span>✅ Confirmed</span>
+                            <span class="fw-bold fs-5 text-success" id="confirmedCount">...</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                            <span>❌ Cancelled</span>
+                            <span class="fw-bold fs-5 text-danger" id="cancelledCount">...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Fetch dashboard stats from API
+    async function loadStats() {
+        try {
+            const response = await fetch('/api/dashboard/stats');
+            const result = await response.json();
+            const data = result.data;
+
+            // Update metric cards
+            document.getElementById('totalPatients').textContent = data.totalPatients;
+            document.getElementById('totalDoctors').textContent = data.totalDoctors;
+            document.getElementById('appointmentsToday').textContent = data.appointmentsToday;
+            document.getElementById('pendingCount').textContent = data.pendingCount;
+            document.getElementById('appointmentsThisWeek').textContent = data.appointmentsThisWeek;
+            document.getElementById('confirmedCount').textContent = data.confirmedCount;
+            document.getElementById('cancelledCount').textContent = data.cancelledCount;
+
+            // Draw chart
+            const ctx = document.getElementById('statusChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pending', 'Confirmed', 'Cancelled'],
+                    datasets: [{
+                        data: [data.pendingCount, data.confirmedCount, data.cancelledCount],
+                        backgroundColor: ['#FFC107', '#28A745', '#6C757D'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Failed to load stats:', error);
+        }
+    }
+
+    loadStats();
+</script>
+}
