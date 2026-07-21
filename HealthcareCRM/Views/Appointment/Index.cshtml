@@ -1,0 +1,116 @@
+@model IEnumerable<HealthcareCRM.Models.Appointment>
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<div class="container-fluid">
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">📅 Appointments</h2>
+            <p class="text-muted">Manage all appointments</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary btn-lg">+ Book Appointment</a>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get">
+                <div class="d-flex align-items-center gap-3">
+                    <label class="form-label mb-0 fw-bold">Filter by Status:</label>
+                    <select name="status" class="form-select w-auto" onchange="this.form.submit()">
+                        <option value="">All Statuses</option>
+                        @foreach (var value in new[] { "Pending", "Confirmed", "Cancelled" })
+                        {
+                            <option value="@value" selected="@(ViewBag.Status == value ? "selected" : null)">
+                                @value
+                            </option>
+                        }
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Notes</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center p-4 text-muted">
+                                    No appointments found.
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var appointment in Model)
+                        {
+                            <tr>
+                                <td>@appointment.AppointmentDate.ToString("dd MMM yyyy HH:mm")</td>
+                                <td><strong>@appointment.Patient?.FullName</strong></td>
+                                <td>@appointment.Doctor?.Name</td>
+                                <td>@appointment.Notes</td>
+                                <td>
+                                    <span class="badge bg-@(appointment.Status == "Confirmed" ? "success" : appointment.Status == "Cancelled" ? "secondary" : "warning text-dark")">
+                                        @appointment.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <a asp-action="Edit"
+                                       asp-route-id="@appointment.Id"
+                                       class="btn btn-sm btn-outline-primary">Edit</a>
+
+                                    @if (appointment.Status != "Confirmed")
+                                    {
+                                        <form asp-action="UpdateStatus" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@appointment.Id" />
+                                            <input type="hidden" name="status" value="Confirmed" />
+                                            <button class="btn btn-sm btn-outline-success">Confirm</button>
+                                        </form>
+                                    }
+
+                                    @if (appointment.Status != "Cancelled")
+                                    {
+                                        <form asp-action="UpdateStatus" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@appointment.Id" />
+                                            <input type="hidden" name="status" value="Cancelled" />
+                                            <button class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('Cancel this appointment?')">
+                                                Cancel
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

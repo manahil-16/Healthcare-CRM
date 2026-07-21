@@ -1,0 +1,90 @@
+@model HealthcareCRM.Models.Patient
+
+@{
+    ViewData["Title"] = "Patient Details";
+}
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
+
+<h3>Patient Details</h3>
+
+</div>
+
+<div class="card-body">
+
+<table class="table">
+
+<tr>
+
+<th>Name</th>
+
+<td>@Model.FullName</td>
+
+</tr>
+
+<tr>
+
+<th>Email</th>
+
+<td>@Model.Email</td>
+
+</tr>
+
+<tr>
+
+<th>Phone</th>
+
+<td>@Model.Phone</td>
+
+</tr>
+
+<tr>
+
+<th>Address</th>
+
+<td>@Model.Address</td>
+
+</tr>
+
+<tr>
+
+<th>Date Of Birth</th>
+
+<td>@Model.DateOfBirth.ToString("dd-MMM-yyyy")</td>
+
+</tr>
+
+<tr>
+
+<th>Created At</th>
+
+<td>@Model.CreatedAt.ToString("dd-MMM-yyyy hh:mm tt")</td>
+
+</tr>
+
+</table>
+
+<a asp-action="Edit"
+asp-route-id="@Model.Id"
+class="btn btn-warning">
+
+Edit
+
+</a>
+
+<a asp-action="Index"
+class="btn btn-secondary">
+
+Back
+
+</a>
+
+</div>
+
+</div>
+
+</div>

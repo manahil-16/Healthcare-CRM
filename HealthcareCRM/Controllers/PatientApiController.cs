@@ -17,12 +17,43 @@ namespace HealthcareCRM.Controllers
         }
 
         // GET: api/patients
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var patients = await _context.Patients.ToListAsync();
-            return Ok(new { success = true, data = patients, message = "Patients retrieved" });
-        }
+[HttpGet]
+public async Task<IActionResult> GetAll(
+    string? search,
+    int page = 1,
+    int pageSize = 20)
+{
+    page = Math.Max(1, page);
+    pageSize = Math.Clamp(pageSize, 1, 100);
+    var query = _context.Patients.AsQueryable();
+
+    if (!string.IsNullOrWhiteSpace(search))
+    {
+        query = query.Where(p =>
+            p.FullName.Contains(search) ||
+            p.Phone.Contains(search) ||
+            p.DateOfBirth.ToString().Contains(search));
+    }
+
+    int totalRecords = await query.CountAsync();
+
+    var patients = await query
+        .OrderBy(p => p.FullName)
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+    return Ok(new
+    {
+        success = true,
+        data = patients,
+        page,
+        pageSize,
+        totalRecords,
+        totalPages = (int)Math.Ceiling((double)totalRecords / pageSize),
+        message = "Patients retrieved successfully."
+    });
+}
 
         // GET: api/patients/5
         [HttpGet("{id}")]
@@ -62,6 +93,8 @@ namespace HealthcareCRM.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, PatientViewModel model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(new { success = false, data = (object?)null, message = "Invalid patient data." });
             var patient = await _context.Patients.FindAsync(id);
             if (patient == null)
                 return NotFound(new { success = false, message = "Patient not found" });
@@ -75,5 +108,40 @@ namespace HealthcareCRM.Controllers
             await _context.SaveChangesAsync();
             return Ok(new { success = true, data = patient, message = "Patient updated" });
         }
+
+        // DELETE: api/patients/5
+[HttpDelete("{id}")]
+public async Task<IActionResult> Delete(int id)
+{
+    var patient = await _context.Patients.FindAsync(id);
+
+    if (patient == null)
+    {
+        return NotFound(new
+        {
+            success = false,
+            data = (object?)null,
+            message = "Patient not found."
+        });
+    }
+
+    _context.Patients.Remove(patient);
+
+    try
+    {
+        await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateException)
+    {
+        return Conflict(new { success = false, data = (object?)null, message = "Patient cannot be deleted while appointments are linked to it." });
+    }
+
+    return Ok(new
+    {
+        success = true,
+        data = (object?)null,
+        message = "Patient deleted successfully."
+    });
+}
     }
 }

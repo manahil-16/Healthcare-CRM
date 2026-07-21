@@ -1,0 +1,61 @@
+@model HealthcareCRM.Models.DoctorViewModel
+
+@{
+    ViewData["Title"] = "Edit Doctor";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Edit Doctor - HealthcareCRM</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body style="background:#F4F6F9; min-height:100vh; padding:40px 0;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Edit Doctor</h3>
+
+                        <form method="post" action="/Doctor/Edit">
+                            <input type="hidden" name="Id" value="@Model.Id" />
+
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" name="Name" value="@Model.Name"
+                                       class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Specialization</label>
+                                <input type="text" name="Specialization"
+                                       value="@Model.Specialization"
+                                       class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Phone</label>
+                                <input type="text" name="Phone" value="@Model.Phone"
+                                       class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Schedule days</label>
+                                <input type="text" name="ScheduleDays" value="@Model.ScheduleDays"
+                                       class="form-control" required />
+                            </div>
+
+                            <button type="submit" class="btn btn-warning w-100 mb-2">
+                                Update Doctor
+                            </button>
+                            <a href="/Doctor" class="btn btn-secondary w-100">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
