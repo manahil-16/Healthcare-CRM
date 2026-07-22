@@ -138,8 +138,14 @@ public async Task<IActionResult> Index(string? search, int page = 1)
         }
 
        // GET: /Patient/Delete/5
+// GET: /Patient/Delete/5
 public async Task<IActionResult> Delete(int id)
 {
+    // Only Admin can delete
+    var role = HttpContext.Session.GetString("UserRole");
+    if (role != "Admin")
+        return RedirectToAction("AccessDenied", "Account");
+
     var patient = await _context.Patients.FindAsync(id);
     if (patient == null) return NotFound();
     return View(patient);
@@ -150,6 +156,11 @@ public async Task<IActionResult> Delete(int id)
 [ValidateAntiForgeryToken]
 public async Task<IActionResult> DeleteConfirmed(int id)
 {
+    // Only Admin can delete
+    var role = HttpContext.Session.GetString("UserRole");
+    if (role != "Admin")
+        return RedirectToAction("AccessDenied", "Account");
+
     var patient = await _context.Patients.FindAsync(id);
     if (patient == null) return NotFound();
 

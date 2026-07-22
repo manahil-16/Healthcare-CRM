@@ -226,11 +226,14 @@
 
                                     </a>
 
-                                    <a asp-action="Delete"
-   asp-route-id="@patient.Id"
-   class="btn btn-outline-danger btn-sm">
-    Delete
-</a>
+                                  @if (Context.Session.GetString("UserRole") == "Admin")
+{
+    <a asp-action="Delete"
+       asp-route-id="@patient.Id"
+       class="btn btn-outline-danger btn-sm">
+        Delete
+    </a>
+}
 
                                 </td>
 

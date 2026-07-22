@@ -42,12 +42,12 @@ namespace HealthcareCRM.Controllers
                 return View(model);
             }
 
-            // Hash password before saving
             var user = new User
             {
                 FullName = model.FullName,
                 Email = model.Email,
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password)
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
+                Role = "Staff" // Default role is Staff
             };
 
             _context.Users.Add(user);
@@ -63,7 +63,8 @@ namespace HealthcareCRM.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == model.Email);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
             {
@@ -71,8 +72,11 @@ namespace HealthcareCRM.Controllers
                 return View(model);
             }
 
+            // Store user info in session
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("UserName", user.FullName);
+            HttpContext.Session.SetString("UserRole", user.Role);
+
             return RedirectToAction("Index", "Dashboard");
         }
 
@@ -83,5 +87,10 @@ namespace HealthcareCRM.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction(nameof(Login));
         }
+        // GET: /Account/AccessDenied
+public IActionResult AccessDenied()
+{
+    return View();
+}
     }
 }
