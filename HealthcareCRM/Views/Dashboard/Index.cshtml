@@ -106,21 +106,75 @@
 @section Scripts {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Fetch dashboard stats from API
     async function loadStats() {
+        // Show loading spinner
+        document.getElementById('statsCards').innerHTML = `
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-muted mt-2">Loading dashboard data...</p>
+            </div>`;
+
         try {
             const response = await fetch('/api/dashboard/stats');
             const result = await response.json();
             const data = result.data;
 
-            // Update metric cards
-            document.getElementById('totalPatients').textContent = data.totalPatients;
-            document.getElementById('totalDoctors').textContent = data.totalDoctors;
-            document.getElementById('appointmentsToday').textContent = data.appointmentsToday;
-            document.getElementById('pendingCount').textContent = data.pendingCount;
-            document.getElementById('appointmentsThisWeek').textContent = data.appointmentsThisWeek;
-            document.getElementById('confirmedCount').textContent = data.confirmedCount;
-            document.getElementById('cancelledCount').textContent = data.cancelledCount;
+            // Restore cards with data
+            document.getElementById('statsCards').innerHTML = `
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="fs-1">👤</div>
+                                <div>
+                                    <div class="text-muted small">Total Patients</div>
+                                    <div class="fw-bold fs-3">${data.totalPatients}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="fs-1">🩺</div>
+                                <div>
+                                    <div class="text-muted small">Active Doctors</div>
+                                    <div class="fw-bold fs-3">${data.totalDoctors}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="fs-1">📅</div>
+                                <div>
+                                    <div class="text-muted small">Appointments Today</div>
+                                    <div class="fw-bold fs-3">${data.appointmentsToday}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="fs-1">⏳</div>
+                                <div>
+                                    <div class="text-muted small">Pending Appointments</div>
+                                    <div class="fw-bold fs-3 text-warning">${data.pendingCount}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
 
             // Draw chart
             const ctx = document.getElementById('statusChart').getContext('2d');
@@ -136,13 +190,21 @@
                 },
                 options: {
                     responsive: true,
-                    plugins: {
-                        legend: { position: 'bottom' }
-                    }
+                    plugins: { legend: { position: 'bottom' } }
                 }
             });
+
+            document.getElementById('appointmentsThisWeek').textContent = data.appointmentsThisWeek;
+            document.getElementById('confirmedCount').textContent = data.confirmedCount;
+            document.getElementById('cancelledCount').textContent = data.cancelledCount;
+
         } catch (error) {
-            console.error('Failed to load stats:', error);
+            document.getElementById('statsCards').innerHTML = `
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        Failed to load dashboard data. Please refresh the page.
+                    </div>
+                </div>`;
         }
     }
 

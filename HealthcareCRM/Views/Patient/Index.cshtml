@@ -40,11 +40,28 @@
 
         </div>
 
-        <a asp-action="Create" class="btn btn-primary btn-lg">
-
-            + Add Patient
-
-        </a>
+        @if (!Model.Any())
+{
+    <tr>
+        <td colspan="6">
+            <div class="text-center py-5">
+                <div class="fs-1 mb-3">👤</div>
+                <h5 class="text-muted">No patients found</h5>
+                <p class="text-muted small">
+                    @if (!string.IsNullOrEmpty(ViewBag.Search as string))
+                    {
+                        <span>No results for "@ViewBag.Search" — try a different search</span>
+                    }
+                    else
+                    {
+                        <span>Get started by adding your first patient</span>
+                    }
+                </p>
+                <a asp-action="Create" class="btn btn-primary mt-2">+ Add Patient</a>
+            </div>
+        </td>
+    </tr>
+}
 
     </div>
 
@@ -127,7 +144,6 @@
     </div>
 
     <!-- Search -->
-
     <div class="card shadow-sm border-0 mb-4">
 
         <div class="card-body">

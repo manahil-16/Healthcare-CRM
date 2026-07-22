@@ -18,8 +18,19 @@
             <h2 class="fw-bold mb-1">📅 Appointments</h2>
             <p class="text-muted">Manage all appointments</p>
         </div>
-        <a asp-action="Create" class="btn btn-primary btn-lg">+ Book Appointment</a>
-    </div>
+@if (!Model.Any())
+{
+    <tr>
+        <td colspan="6">
+            <div class="text-center py-5">
+                <div class="fs-1 mb-3">📅</div>
+                <h5 class="text-muted">No appointments found</h5>
+                <p class="text-muted small">Book your first appointment to get started</p>
+                <a asp-action="Create" class="btn btn-primary mt-2">+ Book Appointment</a>
+            </div>
+        </td>
+    </tr>
+}    </div>
 
     <!-- Status Filter -->
     <div class="card mb-4">
