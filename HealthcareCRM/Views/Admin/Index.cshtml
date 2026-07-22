@@ -1,0 +1,89 @@
+@model IEnumerable<HealthcareCRM.Models.User>
+
+@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<div class="container-fluid">
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">⚙️ Admin Panel</h2>
+            <p class="text-muted">Manage user roles and access</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Registered On</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center p-4 text-muted">
+                                    No users found.
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@user.Id</td>
+                                <td><strong>@user.FullName</strong></td>
+                                <td>@user.Email</td>
+                                <td>
+                                    <span class="badge bg-@(user.Role == "Admin" ? "warning text-dark" : "secondary")">
+                                        @user.Role
+                                    </span>
+                                </td>
+                                <td>@user.CreatedAt.ToString("dd MMM yyyy")</td>
+                                <td>
+                                    @if (user.Role == "Staff")
+                                    {
+                                        <form asp-action="ChangeRole" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@user.Id" />
+                                            <input type="hidden" name="role" value="Admin" />
+                                            <button class="btn btn-sm btn-warning">
+                                                Make Admin
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="ChangeRole" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@user.Id" />
+                                            <input type="hidden" name="role" value="Staff" />
+                                            <button class="btn btn-sm btn-secondary">
+                                                Make Staff
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

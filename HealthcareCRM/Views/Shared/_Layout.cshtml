@@ -15,8 +15,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid px-4">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    HealthcareCRM
+                <a class="navbar-brand" asp-controller="Dashboard" asp-action="Index">
+                    🏥 HealthcareCRM
                 </a>
                 <button class="navbar-toggler" type="button"
                         data-bs-toggle="collapse"
@@ -25,27 +25,54 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">
-                                Home
+                            <a class="nav-link" asp-controller="Dashboard" asp-action="Index">
+                                🏠 Home
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Appointment" asp-action="Index">
-                                Appointments
+                                📅 Appointments
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Patient" asp-action="Index">
-                                Patients
+                                👤 Patients
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Doctor" asp-action="Index">
-                                Doctors
+                                🩺 Doctors
                             </a>
                         </li>
+
+                        @if (Context.Session.GetString("UserRole") == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-warning fw-bold"
+                                   asp-controller="Admin"
+                                   asp-action="Index">
+                                    ⚙️ Admin
+                                </a>
+                            </li>
+                        }
+
                     </ul>
+
+                    @if (Context.Session.GetInt32("UserId") != null)
+                    {
+                        <span class="text-white-50 me-2 small">
+                            👋 @Context.Session.GetString("UserName")
+                            <span class="badge bg-@(Context.Session.GetString("UserRole") == "Admin" ? "warning text-dark" : "secondary") ms-1">
+                                @Context.Session.GetString("UserRole")
+                            </span>
+                        </span>
+                    }
+
                     <form asp-controller="Account" asp-action="Logout" method="post" class="ms-2">
                         <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
                     </form>
@@ -57,8 +84,6 @@
     <main class="flex-grow-1 py-4">
         @RenderBody()
     </main>
-
-    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
