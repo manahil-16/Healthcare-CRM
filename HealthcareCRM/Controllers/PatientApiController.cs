@@ -17,131 +17,112 @@ namespace HealthcareCRM.Controllers
         }
 
         // GET: api/patients
-[HttpGet]
-public async Task<IActionResult> GetAll(
-    string? search,
-    int page = 1,
-    int pageSize = 20)
-{
-    page = Math.Max(1, page);
-    pageSize = Math.Clamp(pageSize, 1, 100);
-    var query = _context.Patients.AsQueryable();
-
-    if (!string.IsNullOrWhiteSpace(search))
-    {
-        query = query.Where(p =>
-            p.FullName.Contains(search) ||
-            p.Phone.Contains(search) ||
-            p.DateOfBirth.ToString().Contains(search));
-    }
-
-    int totalRecords = await query.CountAsync();
-
-    var patients = await query
-        .OrderBy(p => p.FullName)
-        .Skip((page - 1) * pageSize)
-        .Take(pageSize)
-        .ToListAsync();
-
-    return Ok(new
-    {
-        success = true,
-        data = patients,
-        page,
-        pageSize,
-        totalRecords,
-        totalPages = (int)Math.Ceiling((double)totalRecords / pageSize),
-        message = "Patients retrieved successfully."
-    });
-}
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var patients = await _context.Patients.ToListAsync();
+                return Ok(new { success = true, data = patients, message = "Patients retrieved" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message, data = (object?)null });
+            }
+        }
 
         // GET: api/patients/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
-                return NotFound(new { success = false, message = "Patient not found" });
+            try
+            {
+                var patient = await _context.Patients.FindAsync(id);
+                if (patient == null)
+                    return NotFound(new { success = false, message = "Patient not found", data = (object?)null });
 
-            return Ok(new { success = true, data = patient, message = "Patient retrieved" });
+                return Ok(new { success = true, data = patient, message = "Patient retrieved" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message, data = (object?)null });
+            }
         }
 
         // POST: api/patients
         [HttpPost]
         public async Task<IActionResult> Create(PatientViewModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(new { success = false, message = "Invalid data" });
-
-            var patient = new Patient
+            try
             {
-                FullName = model.FullName,
-                Email = model.Email,
-                Phone = model.Phone,
-                Address = model.Address,
-                DateOfBirth = model.DateOfBirth
-            };
+                if (!ModelState.IsValid)
+                    return BadRequest(new { success = false, message = "Invalid data", data = (object?)null });
 
-            _context.Patients.Add(patient);
-            await _context.SaveChangesAsync();
+                var patient = new Patient
+                {
+                    FullName = model.FullName,
+                    Email = model.Email,
+                    Phone = model.Phone,
+                    Address = model.Address,
+                    DateOfBirth = model.DateOfBirth
+                };
 
-            return CreatedAtAction(nameof(GetById), new { id = patient.Id },
-                new { success = true, data = patient, message = "Patient created" });
+                _context.Patients.Add(patient);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetById), new { id = patient.Id },
+                    new { success = true, data = patient, message = "Patient created" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message, data = (object?)null });
+            }
         }
 
         // PUT: api/patients/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, PatientViewModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(new { success = false, data = (object?)null, message = "Invalid patient data." });
-            var patient = await _context.Patients.FindAsync(id);
-            if (patient == null)
-                return NotFound(new { success = false, message = "Patient not found" });
+            try
+            {
+                var patient = await _context.Patients.FindAsync(id);
+                if (patient == null)
+                    return NotFound(new { success = false, message = "Patient not found", data = (object?)null });
 
-            patient.FullName = model.FullName;
-            patient.Email = model.Email;
-            patient.Phone = model.Phone;
-            patient.Address = model.Address;
-            patient.DateOfBirth = model.DateOfBirth;
+                patient.FullName = model.FullName;
+                patient.Email = model.Email;
+                patient.Phone = model.Phone;
+                patient.Address = model.Address;
+                patient.DateOfBirth = model.DateOfBirth;
 
-            await _context.SaveChangesAsync();
-            return Ok(new { success = true, data = patient, message = "Patient updated" });
+                await _context.SaveChangesAsync();
+                return Ok(new { success = true, data = patient, message = "Patient updated" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message, data = (object?)null });
+            }
         }
 
         // DELETE: api/patients/5
-[HttpDelete("{id}")]
-public async Task<IActionResult> Delete(int id)
-{
-    var patient = await _context.Patients.FindAsync(id);
-
-    if (patient == null)
-    {
-        return NotFound(new
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            success = false,
-            data = (object?)null,
-            message = "Patient not found."
-        });
-    }
+            try
+            {
+                var patient = await _context.Patients.FindAsync(id);
+                if (patient == null)
+                    return NotFound(new { success = false, message = "Patient not found", data = (object?)null });
 
-    _context.Patients.Remove(patient);
+                _context.Patients.Remove(patient);
+                await _context.SaveChangesAsync();
 
-    try
-    {
-        await _context.SaveChangesAsync();
-    }
-    catch (DbUpdateException)
-    {
-        return Conflict(new { success = false, data = (object?)null, message = "Patient cannot be deleted while appointments are linked to it." });
-    }
-
-    return Ok(new
-    {
-        success = true,
-        data = (object?)null,
-        message = "Patient deleted successfully."
-    });
-}
+                return Ok(new { success = true, message = "Patient deleted successfully", data = (object?)null });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message, data = (object?)null });
+            }
+        }
     }
 }

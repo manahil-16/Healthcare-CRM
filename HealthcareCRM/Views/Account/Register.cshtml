@@ -30,6 +30,7 @@
                 <h2>Create Account 🚀</h2>
                 <p class="auth-subtitle">Register to get started with HealthcareCRM</p>
                 <form asp-action="Register" method="post">
+                    @Html.AntiForgeryToken()
                     <div class="mb-3">
                         <label class="form-label">Full Name</label>
                         <input asp-for="FullName" class="form-control" placeholder="Enter your full name" />

@@ -17,8 +17,8 @@ namespace HealthcareCRM.Models
 
         public string Status { get; set; } = "Pending";
 
-        public string Notes { get; set; } = string.Empty;
-
+[Display(Name = "Notes")]
+public string? Notes { get; set; }
         // For dropdowns
         public List<Patient> Patients { get; set; } = new();
         public List<Doctor> Doctors { get; set; } = new();

@@ -38,6 +38,7 @@ namespace HealthcareCRM.Controllers
 
         // POST: /Doctor/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DoctorViewModel model)
         {
             if (!AuthHelper.IsAuthenticated(_accessor))
@@ -84,6 +85,7 @@ namespace HealthcareCRM.Controllers
 
         // POST: /Doctor/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(DoctorViewModel model)
         {
             if (!AuthHelper.IsAuthenticated(_accessor))
@@ -101,11 +103,11 @@ namespace HealthcareCRM.Controllers
             doctor.ScheduleDays = model.ScheduleDays;
 
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Doctor updated successfully.";
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        // GET: /Doctor/Deactivate/5
         public async Task<IActionResult> Deactivate(int id)
         {
             if (!AuthHelper.IsAuthenticated(_accessor))
@@ -114,9 +116,9 @@ namespace HealthcareCRM.Controllers
             var doctor = await _context.Doctors.FindAsync(id);
             if (doctor == null) return NotFound();
 
-            // Soft delete — toggle
             doctor.IsActive = !doctor.IsActive;
             await _context.SaveChangesAsync();
+            TempData["Success"] = doctor.IsActive ? "Doctor reactivated." : "Doctor deactivated.";
             return RedirectToAction("Index");
         }
     }

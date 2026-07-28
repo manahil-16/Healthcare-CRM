@@ -6,334 +6,173 @@
 
 <div class="container-fluid">
 
-    <!-- Header -->
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show">
-
-        @TempData["Success"]
-
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="alert">
-        </button>
-
-    </div>
-}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-        <div>
-
-            <h2 class="fw-bold text-primary mb-1">
-
-                <i class="bi bi-people-fill"></i>
-
-                Patients
-
-            </h2>
-
-            <p class="text-muted">
-
-                Manage all registered patients.
-
-            </p>
-
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
+    }
 
-        @if (!Model.Any())
-{
-    <tr>
-        <td colspan="6">
-            <div class="text-center py-5">
-                <div class="fs-1 mb-3">👤</div>
-                <h5 class="text-muted">No patients found</h5>
-                <p class="text-muted small">
-                    @if (!string.IsNullOrEmpty(ViewBag.Search as string))
-                    {
-                        <span>No results for "@ViewBag.Search" — try a different search</span>
-                    }
-                    else
-                    {
-                        <span>Get started by adding your first patient</span>
-                    }
-                </p>
-                <a asp-action="Create" class="btn btn-primary mt-2">+ Add Patient</a>
-            </div>
-        </td>
-    </tr>
-}
-
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">👤 Patients</h2>
+            <p class="text-muted">Manage all registered patients.</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary btn-lg">+ Add Patient</a>
     </div>
 
     <!-- Statistics -->
-
     <div class="row mb-4">
-
         <div class="col-md-4">
-
             <div class="card shadow-sm border-0">
-
                 <div class="card-body">
-
-                    <h6 class="text-muted">
-
-                        Total Patients
-
-                    </h6>
-
-                    <h2 class="fw-bold">
-
-                        @Model.Count()
-
-                    </h2>
-
+                    <h6 class="text-muted">Total Patients</h6>
+                    <h2 class="fw-bold">@Model.Count()</h2>
                 </div>
-
             </div>
-
         </div>
-
         <div class="col-md-4">
-
             <div class="card shadow-sm border-0">
-
                 <div class="card-body">
-
-                    <h6 class="text-muted">
-
-                        New Records
-
-                    </h6>
-
-                    <h2 class="fw-bold text-success">
-
-                        @Model.Count()
-
-                    </h2>
-
+                    <h6 class="text-muted">New Records</h6>
+                    <h2 class="fw-bold text-success">@Model.Count()</h2>
                 </div>
-
             </div>
-
         </div>
-
         <div class="col-md-4">
-
             <div class="card shadow-sm border-0">
-
                 <div class="card-body">
-
-                    <h6 class="text-muted">
-
-                        Active Records
-
-                    </h6>
-
-                    <h2 class="fw-bold text-info">
-
-                        @Model.Count()
-
-                    </h2>
-
+                    <h6 class="text-muted">Active Records</h6>
+                    <h2 class="fw-bold text-info">@Model.Count()</h2>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
     <!-- Search -->
     <div class="card shadow-sm border-0 mb-4">
-
         <div class="card-body">
-
             <form method="get">
-
                 <div class="input-group">
-
                     <input type="text"
                            name="search"
                            value="@ViewBag.Search"
                            class="form-control"
                            placeholder="Search by Name, Phone or DOB..." />
-
-                    <button class="btn btn-primary">
-
-                        Search
-
-                    </button>
-
+                    <button class="btn btn-primary">Search</button>
+                    @if (!string.IsNullOrEmpty(ViewBag.Search as string))
+                    {
+                        <a href="/Patient" class="btn btn-secondary">Clear</a>
+                    }
                 </div>
-
             </form>
-
         </div>
-
     </div>
 
     <!-- Table -->
-
     <div class="card shadow border-0">
-
         <div class="card-body p-0">
-
             <div class="table-responsive">
-
                 <table class="table table-hover align-middle mb-0">
-
-                    <thead class="table-primary">
-
+                    <thead>
                         <tr>
-
                             <th>Name</th>
-
                             <th>Email</th>
-
                             <th>Phone</th>
-
                             <th>Address</th>
-
                             <th>DOB</th>
-
                             <th width="240">Actions</th>
-
                         </tr>
-
                     </thead>
-
                     <tbody>
+                        @if (Model.Any())
+                        {
+                            @foreach (var patient in Model)
+                            {
+                                <tr>
+                                    <td><strong>@patient.FullName</strong></td>
+                                    <td>@patient.Email</td>
+                                    <td>@patient.Phone</td>
+                                    <td>@patient.Address</td>
+                                    <td>@patient.DateOfBirth.ToString("dd MMM yyyy")</td>
+                                    <td>
+                                        <a asp-action="Details"
+                                           asp-route-id="@patient.Id"
+                                           class="btn btn-outline-primary btn-sm">View</a>
 
-                    @if(Model.Any())
-                    {
-                        @foreach(var patient in Model)
+                                        <a asp-action="Edit"
+                                           asp-route-id="@patient.Id"
+                                           class="btn btn-outline-warning btn-sm">Edit</a>
+
+                                        @if (Context.Session.GetString("UserRole") == "Admin")
+                                        {
+                                            <a asp-action="Delete"
+                                               asp-route-id="@patient.Id"
+                                               class="btn btn-outline-danger btn-sm">Delete</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
                         {
                             <tr>
-
-                                <td>
-
-                                    <strong>@patient.FullName</strong>
-
+                                <td colspan="6">
+                                    <div class="text-center py-5">
+                                        <div class="fs-1 mb-3">👤</div>
+                                        <h5 class="text-muted">No patients found</h5>
+                                        <p class="text-muted small">
+                                            @if (!string.IsNullOrEmpty(ViewBag.Search as string))
+                                            {
+                                                <span>No results for "@ViewBag.Search"</span>
+                                            }
+                                            else
+                                            {
+                                                <span>Get started by adding your first patient</span>
+                                            }
+                                        </p>
+                                        <a asp-action="Create" class="btn btn-primary mt-2">+ Add Patient</a>
+                                    </div>
                                 </td>
-
-                                <td>@patient.Email</td>
-
-                                <td>@patient.Phone</td>
-
-                                <td>@patient.Address</td>
-
-                                <td>@patient.DateOfBirth.ToString("dd MMM yyyy")</td>
-
-                                <td>
-
-                                    <a asp-action="Details"
-                                       asp-route-id="@patient.Id"
-                                       class="btn btn-outline-primary btn-sm">
-
-                                        View
-
-                                    </a>
-
-                                    <a asp-action="Edit"
-                                       asp-route-id="@patient.Id"
-                                       class="btn btn-outline-warning btn-sm">
-
-                                        Edit
-
-                                    </a>
-
-                                  @if (Context.Session.GetString("UserRole") == "Admin")
-{
-    <a asp-action="Delete"
-       asp-route-id="@patient.Id"
-       class="btn btn-outline-danger btn-sm">
-        Delete
-    </a>
-}
-
-                                </td>
-
                             </tr>
                         }
-                    }
-                    else
-                    {
-                        <tr>
-
-                            <td colspan="6" class="text-center p-4">
-
-                                No patients found.
-
-                            </td>
-
-                        </tr>
-                    }
-
                     </tbody>
-
                 </table>
-
             </div>
-
         </div>
-
     </div>
 
     <!-- Pagination -->
-
-    @if(ViewBag.TotalPages > 1)
+    @if (ViewBag.TotalPages > 1)
     {
         <nav class="mt-4">
-
             <ul class="pagination justify-content-center">
-
-                @if(ViewBag.CurrentPage>1)
+                @if (ViewBag.CurrentPage > 1)
                 {
                     <li class="page-item">
-
                         <a class="page-link"
-                           asp-route-page="@(ViewBag.CurrentPage-1)"
-                           asp-route-search="@ViewBag.Search">
-
-                            Previous
-
-                        </a>
-
+                           asp-route-page="@(ViewBag.CurrentPage - 1)"
+                           asp-route-search="@ViewBag.Search">Previous</a>
                     </li>
                 }
-
-                @for(int i=1;i<=ViewBag.TotalPages;i++)
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
                 {
-                    <li class="page-item @(i==ViewBag.CurrentPage?"active":"")">
-
+                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
                         <a class="page-link"
                            asp-route-page="@i"
-                           asp-route-search="@ViewBag.Search">
-
-                            @i
-
-                        </a>
-
+                           asp-route-search="@ViewBag.Search">@i</a>
                     </li>
                 }
-
-                @if(ViewBag.CurrentPage<ViewBag.TotalPages)
+                @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                 {
                     <li class="page-item">
-
                         <a class="page-link"
-                           asp-route-page="@(ViewBag.CurrentPage+1)"
-                           asp-route-search="@ViewBag.Search">
-
-                            Next
-
-                        </a>
-
+                           asp-route-page="@(ViewBag.CurrentPage + 1)"
+                           asp-route-search="@ViewBag.Search">Next</a>
                     </li>
                 }
-
             </ul>
-
         </nav>
     }
 

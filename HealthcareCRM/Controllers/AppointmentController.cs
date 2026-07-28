@@ -19,72 +19,136 @@ public class AppointmentController : Controller
 
     private bool IsAuthenticated() => AuthHelper.IsAuthenticated(_accessor);
 
+    // GET: /Appointment
     public async Task<IActionResult> Index(string? status)
     {
         if (!IsAuthenticated()) return RedirectToAction("Login", "Account");
-        var query = _context.Appointments.Include(a => a.Patient).Include(a => a.Doctor).AsQueryable();
-        if (!string.IsNullOrWhiteSpace(status)) query = query.Where(a => a.Status == status);
+
+        var query = _context.Appointments
+            .Include(a => a.Patient)
+            .Include(a => a.Doctor)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(status))
+            query = query.Where(a => a.Status == status);
+
         ViewBag.Status = status;
         return View(await query.OrderByDescending(a => a.AppointmentDate).ToListAsync());
     }
 
+    // GET: /Appointment/Create
     public async Task<IActionResult> Create()
     {
         if (!IsAuthenticated()) return RedirectToAction("Login", "Account");
         return View(await NewModel());
     }
 
+    // POST: /Appointment/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(AppointmentViewModel model)
     {
         if (!IsAuthenticated()) return RedirectToAction("Login", "Account");
-        if (!await ValidSelection(model)) ModelState.AddModelError(string.Empty, "Select an existing patient and active doctor.");
+
+        ModelState.Remove("Notes");
+        ModelState.Remove("PatientName");
+        ModelState.Remove("DoctorName");
+        ModelState.Remove("Patients");
+        ModelState.Remove("Doctors");
+        ModelState.Remove("Status");
+
+        if (!await ValidSelection(model))
+            ModelState.AddModelError(string.Empty, "Select an existing patient and active doctor.");
+
         if (!ModelState.IsValid) return View(await NewModel(model));
-        _context.Appointments.Add(new Appointment { PatientId = model.PatientId, DoctorId = model.DoctorId, AppointmentDate = model.AppointmentDate, Notes = model.Notes, Status = "Pending" });
+
+        _context.Appointments.Add(new Appointment
+        {
+            PatientId = model.PatientId,
+            DoctorId = model.DoctorId,
+            AppointmentDate = model.AppointmentDate,
+            Notes = model.Notes ?? string.Empty,
+            Status = "Pending"
+        });
+
         await _context.SaveChangesAsync();
         TempData["Success"] = "Appointment booked successfully.";
         return RedirectToAction(nameof(Index));
     }
 
+    // GET: /Appointment/Edit/5
     public async Task<IActionResult> Edit(int id)
     {
         if (!IsAuthenticated()) return RedirectToAction("Login", "Account");
+
         var appointment = await _context.Appointments.FindAsync(id);
         if (appointment is null) return NotFound();
-        return View(await NewModel(new AppointmentViewModel { Id = appointment.Id, PatientId = appointment.PatientId, DoctorId = appointment.DoctorId, AppointmentDate = appointment.AppointmentDate, Notes = appointment.Notes, Status = appointment.Status }));
+
+        return View(await NewModel(new AppointmentViewModel
+        {
+            Id = appointment.Id,
+            PatientId = appointment.PatientId,
+            DoctorId = appointment.DoctorId,
+            AppointmentDate = appointment.AppointmentDate,
+            Notes = appointment.Notes,
+            Status = appointment.Status
+        }));
     }
 
+    // POST: /Appointment/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(AppointmentViewModel model)
     {
         if (!IsAuthenticated()) return RedirectToAction("Login", "Account");
-        if (!await ValidSelection(model)) ModelState.AddModelError(string.Empty, "Select an existing patient and active doctor.");
+
+        ModelState.Remove("Notes");
+        ModelState.Remove("PatientName");
+        ModelState.Remove("DoctorName");
+        ModelState.Remove("Patients");
+        ModelState.Remove("Doctors");
+        ModelState.Remove("Status");
+
+        if (!await ValidSelection(model))
+            ModelState.AddModelError(string.Empty, "Select an existing patient and active doctor.");
+
         if (!ModelState.IsValid) return View(await NewModel(model));
+
         var appointment = await _context.Appointments.FindAsync(model.Id);
         if (appointment is null) return NotFound();
-        appointment.PatientId = model.PatientId; appointment.DoctorId = model.DoctorId; appointment.AppointmentDate = model.AppointmentDate; appointment.Notes = model.Notes;
+
+        appointment.PatientId = model.PatientId;
+        appointment.DoctorId = model.DoctorId;
+        appointment.AppointmentDate = model.AppointmentDate;
+        appointment.Notes = model.Notes ?? string.Empty;
+
         await _context.SaveChangesAsync();
         TempData["Success"] = "Appointment updated successfully.";
         return RedirectToAction(nameof(Index));
     }
 
+    // POST: /Appointment/UpdateStatus
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> UpdateStatus(int id, string status)
     {
         if (!IsAuthenticated()) return RedirectToAction("Login", "Account");
-        if (status is not ("Pending" or "Confirmed" or "Cancelled")) return BadRequest();
+
+        if (status is not ("Pending" or "Confirmed" or "Cancelled"))
+            return BadRequest();
+
         var appointment = await _context.Appointments.FindAsync(id);
         if (appointment is null) return NotFound();
-        appointment.Status = status; await _context.SaveChangesAsync();
+
+        appointment.Status = status;
+        await _context.SaveChangesAsync();
         TempData["Success"] = "Appointment status updated.";
         return RedirectToAction(nameof(Index));
     }
 
     private async Task<bool> ValidSelection(AppointmentViewModel model) =>
-        await _context.Patients.AnyAsync(p => p.Id == model.PatientId) && await _context.Doctors.AnyAsync(d => d.Id == model.DoctorId && d.IsActive);
+        await _context.Patients.AnyAsync(p => p.Id == model.PatientId) &&
+        await _context.Doctors.AnyAsync(d => d.Id == model.DoctorId && d.IsActive);
 
     private async Task<AppointmentViewModel> NewModel(AppointmentViewModel? model = null)
     {

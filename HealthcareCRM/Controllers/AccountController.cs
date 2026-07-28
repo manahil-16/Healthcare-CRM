@@ -29,6 +29,12 @@ namespace HealthcareCRM.Controllers
             return View();
         }
 
+        // GET: /Account/AccessDenied
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         // POST: /Account/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -47,7 +53,7 @@ namespace HealthcareCRM.Controllers
                 FullName = model.FullName,
                 Email = model.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
-                Role = "Staff" // Default role is Staff
+                Role = "Staff"
             };
 
             _context.Users.Add(user);
@@ -80,6 +86,7 @@ namespace HealthcareCRM.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
+        // POST: /Account/Logout
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Logout()
@@ -87,10 +94,5 @@ namespace HealthcareCRM.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction(nameof(Login));
         }
-        // GET: /Account/AccessDenied
-public IActionResult AccessDenied()
-{
-    return View();
-}
     }
 }

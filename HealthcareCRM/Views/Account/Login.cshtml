@@ -30,6 +30,7 @@
                 <h2>Welcome Back 👋</h2>
                 <p class="auth-subtitle">Login to your HealthcareCRM account</p>
                 <form asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
                     @if (!ViewData.ModelState.IsValid)
                     {
                         <div class="error-msg">Invalid email or password. Please try again.</div>

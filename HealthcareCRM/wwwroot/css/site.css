@@ -20,11 +20,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 /* ── BODY & LAYOUT ── */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
+html, body { height: 100%; margin: 0; padding: 0; }
 
 body {
     font-family: 'Inter', 'Segoe UI', sans-serif;
@@ -38,14 +34,6 @@ body {
 
 main { flex: 1 0 auto; }
 
-/* ── FOOTER ── */
-.footer {
-    flex-shrink: 0;
-    background: white;
-    border-top: 1px solid var(--color-border);
-    padding: 20px 0;
-}
-
 /* ── NAVBAR ── */
 .navbar {
     background-color: var(--color-secondary) !important;
@@ -53,26 +41,13 @@ main { flex: 1 0 auto; }
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-.navbar-brand {
-    color: white !important;
-    font-weight: 700;
-    font-size: 1.2rem;
-}
-
+.navbar-brand { color: white !important; font-weight: 700; font-size: 1.2rem; }
 .nav-link { color: rgba(255,255,255,0.85) !important; font-weight: 500; }
 .nav-link:hover { color: white !important; }
 
 /* ── CARDS ── */
-.card {
-    border: none;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-}
-
-.card-header {
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
-}
-
+.card { border: none; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+.card-header { border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important; }
 .card-body { padding: 25px; }
 
 /* ── TABLES ── */
@@ -84,10 +59,7 @@ main { flex: 1 0 auto; }
     margin-bottom: 0;
 }
 
-.table thead {
-    background: var(--color-secondary);
-    color: white;
-}
+.table thead { background: var(--color-secondary); color: white; }
 
 .table thead th {
     background-color: var(--color-secondary);
@@ -115,8 +87,7 @@ main { flex: 1 0 auto; }
     margin-bottom: 6px;
 }
 
-.form-control,
-.form-select {
+.form-control, .form-select {
     border-radius: var(--radius-md);
     border: 1.5px solid var(--color-border);
     padding: 11px 14px;
@@ -128,8 +99,7 @@ main { flex: 1 0 auto; }
 
 textarea.form-control { min-height: 100px; }
 
-.form-control:focus,
-.form-select:focus {
+.form-control:focus, .form-select:focus {
     border-color: var(--color-primary);
     background: white;
     box-shadow: 0 0 0 3px rgba(46,117,182,0.12);

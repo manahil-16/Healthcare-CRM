@@ -18,19 +18,8 @@
             <h2 class="fw-bold mb-1">📅 Appointments</h2>
             <p class="text-muted">Manage all appointments</p>
         </div>
-@if (!Model.Any())
-{
-    <tr>
-        <td colspan="6">
-            <div class="text-center py-5">
-                <div class="fs-1 mb-3">📅</div>
-                <h5 class="text-muted">No appointments found</h5>
-                <p class="text-muted small">Book your first appointment to get started</p>
-                <a asp-action="Create" class="btn btn-primary mt-2">+ Book Appointment</a>
-            </div>
-        </td>
-    </tr>
-}    </div>
+        <a asp-action="Create" class="btn btn-primary btn-lg">+ Book Appointment</a>
+    </div>
 
     <!-- Status Filter -->
     <div class="card mb-4">
@@ -71,8 +60,13 @@
                         @if (!Model.Any())
                         {
                             <tr>
-                                <td colspan="6" class="text-center p-4 text-muted">
-                                    No appointments found.
+                                <td colspan="6">
+                                    <div class="text-center py-5">
+                                        <div class="fs-1 mb-3">📅</div>
+                                        <h5 class="text-muted">No appointments found</h5>
+                                        <p class="text-muted small">Book your first appointment to get started</p>
+                                        <a asp-action="Create" class="btn btn-primary mt-2">+ Book Appointment</a>
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -82,7 +76,7 @@
                                 <td>@appointment.AppointmentDate.ToString("dd MMM yyyy HH:mm")</td>
                                 <td><strong>@appointment.Patient?.FullName</strong></td>
                                 <td>@appointment.Doctor?.Name</td>
-                                <td>@appointment.Notes</td>
+                                <td>@(string.IsNullOrEmpty(appointment.Notes) ? "-" : appointment.Notes)</td>
                                 <td>
                                     <span class="badge bg-@(appointment.Status == "Confirmed" ? "success" : appointment.Status == "Cancelled" ? "secondary" : "warning text-dark")">
                                         @appointment.Status

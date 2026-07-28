@@ -34,33 +34,25 @@ namespace HealthcareCRM.Controllers
 
         // POST: api/doctors
         [HttpPost]
-        public async Task<IActionResult> Create(DoctorViewModel model)
+        public async Task<IActionResult> Create(Doctor model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(new { success = false, message = "Invalid data" });
 
-            var doctor = new Doctor
-            {
-                Name = model.Name,
-                Specialization = model.Specialization,
-                Phone = model.Phone,
-                ScheduleDays = model.ScheduleDays,
-                IsActive = true
-            };
-            _context.Doctors.Add(doctor);
+            _context.Doctors.Add(model);
             await _context.SaveChangesAsync();
 
             return Ok(new
             {
                 success = true,
-                data = doctor,
+                data = model,
                 message = "Doctor created"
             });
         }
 
         // PUT: api/doctors/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, DoctorViewModel model)
+        public async Task<IActionResult> Update(int id, Doctor model)
         {
             var doctor = await _context.Doctors.FindAsync(id);
             if (doctor == null)
@@ -89,7 +81,6 @@ namespace HealthcareCRM.Controllers
             if (doctor == null)
                 return NotFound(new { success = false, message = "Doctor not found" });
 
-            // Soft delete - toggle active status
             doctor.IsActive = !doctor.IsActive;
             await _context.SaveChangesAsync();
 

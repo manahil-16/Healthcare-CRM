@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HealthcareCRM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27422f6f99a59212c3c5d54fb54c6608449be1f6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3a605fa4b982466463413d681a960905babaeb3")]
 [assembly: System.Reflection.AssemblyProductAttribute("HealthcareCRM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HealthcareCRM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
