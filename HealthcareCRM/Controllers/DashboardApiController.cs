@@ -19,40 +19,47 @@ namespace HealthcareCRM.Controllers
         [HttpGet("stats")]
         public async Task<IActionResult> GetStats()
         {
-            var today = DateTime.Today;
-            var weekStart = today.AddDays(-(int)today.DayOfWeek);
-            var weekEnd = weekStart.AddDays(7);
-
-            var totalPatients = await _context.Patients.CountAsync();
-            var totalDoctors = await _context.Doctors
-                .Where(d => d.IsActive).CountAsync();
-            var appointmentsToday = await _context.Appointments
-                .Where(a => a.AppointmentDate.Date == today).CountAsync();
-            var appointmentsThisWeek = await _context.Appointments
-                .Where(a => a.AppointmentDate >= weekStart
-                    && a.AppointmentDate < weekEnd).CountAsync();
-            var pendingCount = await _context.Appointments
-                .Where(a => a.Status == "Pending").CountAsync();
-            var confirmedCount = await _context.Appointments
-                .Where(a => a.Status == "Confirmed").CountAsync();
-            var cancelledCount = await _context.Appointments
-                .Where(a => a.Status == "Cancelled").CountAsync();
-
-            return Ok(new
+            try
             {
-                success = true,
-                message = "Dashboard stats retrieved",
-                data = new
+                var today = DateTime.Today;
+                var weekStart = today.AddDays(-(int)today.DayOfWeek);
+                var weekEnd = weekStart.AddDays(7);
+
+                var totalPatients = await _context.Patients.CountAsync();
+                var totalDoctors = await _context.Doctors
+                    .Where(d => d.IsActive).CountAsync();
+                var appointmentsToday = await _context.Appointments
+                    .Where(a => a.AppointmentDate.Date == today).CountAsync();
+                var appointmentsThisWeek = await _context.Appointments
+                    .Where(a => a.AppointmentDate >= weekStart
+                        && a.AppointmentDate < weekEnd).CountAsync();
+                var pendingCount = await _context.Appointments
+                    .Where(a => a.Status == "Pending").CountAsync();
+                var confirmedCount = await _context.Appointments
+                    .Where(a => a.Status == "Confirmed").CountAsync();
+                var cancelledCount = await _context.Appointments
+                    .Where(a => a.Status == "Cancelled").CountAsync();
+
+                return Ok(new
                 {
-                    totalPatients,
-                    totalDoctors,
-                    appointmentsToday,
-                    appointmentsThisWeek,
-                    pendingCount,
-                    confirmedCount,
-                    cancelledCount
-                }
-            });
+                    success = true,
+                    message = "Dashboard stats retrieved",
+                    data = new
+                    {
+                        totalPatients,
+                        totalDoctors,
+                        appointmentsToday,
+                        appointmentsThisWeek,
+                        pendingCount,
+                        confirmedCount,
+                        cancelledCount
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = ex.Message, data = (object?)null });
+            }
         }
     }
 }
