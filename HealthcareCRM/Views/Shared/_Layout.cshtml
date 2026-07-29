@@ -12,6 +12,14 @@
 </head>
 
 <body>
+
+    <!-- Network Banner -->
+    <div id="networkBanner"
+         class="alert alert-danger text-center mb-0 d-none"
+         style="border-radius:0; position:sticky; top:0; z-index:9999;">
+        ⚠️ No internet connection. Please check your network.
+    </div>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid px-4">
@@ -88,5 +96,34 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", false)
+
+    <script>
+        // ── Network detection ──
+        function updateNetworkStatus() {
+            const banner = document.getElementById('networkBanner');
+            if (!navigator.onLine) {
+                banner.classList.remove('d-none');
+            } else {
+                banner.classList.add('d-none');
+            }
+        }
+        window.addEventListener('online', updateNetworkStatus);
+        window.addEventListener('offline', updateNetworkStatus);
+        updateNetworkStatus();
+
+        // ── Disable submit button on form submission ──
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('form').forEach(function (form) {
+                form.addEventListener('submit', function () {
+                    const btn = form.querySelector('button[type="submit"]');
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Please wait...';
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
