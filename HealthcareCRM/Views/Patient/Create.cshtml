@@ -4,10 +4,9 @@
     ViewData["Title"] = "Add Patient";
 }
 
-<div class="container mt-5">
+<div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-7">
-
+<div class="col-lg-6 col-md-8">
             <div class="card shadow">
 
                 <div class="card-header bg-primary text-white">
@@ -18,44 +17,70 @@
 
                     <form asp-action="Create" method="post">
 
+                        @Html.AntiForgeryToken()
+
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         <div class="mb-3">
+
                             <label asp-for="FullName" class="form-label"></label>
+
                             <input asp-for="FullName" class="form-control" />
+
                             <span asp-validation-for="FullName" class="text-danger"></span>
+
                         </div>
 
                         <div class="mb-3">
+
                             <label asp-for="Email" class="form-label"></label>
+
                             <input asp-for="Email" class="form-control" />
+
                             <span asp-validation-for="Email" class="text-danger"></span>
+
                         </div>
 
                         <div class="mb-3">
+
                             <label asp-for="Phone" class="form-label"></label>
+
                             <input asp-for="Phone" class="form-control" />
+
                             <span asp-validation-for="Phone" class="text-danger"></span>
+
                         </div>
 
                         <div class="mb-3">
+
                             <label asp-for="Address" class="form-label"></label>
-                            <input asp-for="Address" class="form-control" />
+
+                            <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+
                             <span asp-validation-for="Address" class="text-danger"></span>
+
                         </div>
 
                         <div class="mb-3">
+
                             <label asp-for="DateOfBirth" class="form-label"></label>
+
                             <input asp-for="DateOfBirth" type="date" class="form-control" />
+
                             <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">
+
                             Save Patient
+
                         </button>
 
                         <a asp-action="Index" class="btn btn-secondary w-100 mt-2">
-                            Cancel
+
+                            Back
+
                         </a>
 
                     </form>
@@ -68,8 +93,7 @@
     </div>
 </div>
 
-@section Scripts{
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
 }

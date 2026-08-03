@@ -24,18 +24,22 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+// Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
+// Configure pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
+// Enable Swagger
 app.UseSwagger();
 app.UseSwaggerUI();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
