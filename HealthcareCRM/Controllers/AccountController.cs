@@ -57,29 +57,34 @@ namespace HealthcareCRM.Controllers
         }
 
         // POST: /Account/Login
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
+[HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Login(LoginViewModel model)
+{
+    if (!ModelState.IsValid) return View(model);
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == model.Email);
+    var user = await _context.Users
+        .FirstOrDefaultAsync(u => u.Email == model.Email);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
-            {
-                ModelState.AddModelError("", "Invalid email or password");
-                return View(model);
-            }
+    if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
+    {
+        ModelState.AddModelError("", "Invalid email or password");
+        return View(model);
+    }
 
-            // Store user info in session
-            HttpContext.Session.SetInt32("UserId", user.Id);
-            HttpContext.Session.SetString("UserName", user.FullName);
-            HttpContext.Session.SetString("UserRole", user.Role);
+    // Check if account is deactivated
+    if (!user.IsActive)
+    {
+        ModelState.AddModelError("", "Your account has been deactivated. Contact admin.");
+        return View(model);
+    }
 
-            return RedirectToAction("Index", "Dashboard");
-        }
+    HttpContext.Session.SetInt32("UserId", user.Id);
+    HttpContext.Session.SetString("UserName", user.FullName);
+    HttpContext.Session.SetString("UserRole", user.Role);
 
+    return RedirectToAction("Index", "Dashboard");
+}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Logout()

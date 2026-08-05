@@ -1,0 +1,63 @@
+@model IEnumerable<HealthcareCRM.Models.AuditLog>
+
+@{
+    ViewData["Title"] = "Audit Log";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">📋 Audit Log</h2>
+            <p class="text-muted">Track all admin actions</p>
+        </div>
+        <a asp-action="Index" class="btn btn-secondary">← Back to Admin Panel</a>
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Admin User ID</th>
+                            <th>Action</th>
+                            <th>Target</th>
+                            <th>Details</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="6">
+                                    <div class="text-center py-5">
+                                        <div class="fs-1 mb-3">📋</div>
+                                        <h5 class="text-muted">No audit logs yet</h5>
+                                        <p class="text-muted small">Admin actions will appear here</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var log in Model)
+                        {
+                            <tr>
+                                <td>@log.Id</td>
+                                <td>@log.UserId</td>
+                                <td>
+                                    <span class="badge bg-info">@log.Action</span>
+                                </td>
+                                <td>@log.TargetType #@log.TargetId</td>
+                                <td>@log.Details</td>
+                                <td>@log.Timestamp.ToString("dd MMM yyyy HH:mm")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

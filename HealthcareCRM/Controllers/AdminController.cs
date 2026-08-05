@@ -14,7 +14,6 @@ namespace HealthcareCRM.Controllers
             _context = context;
         }
 
-        // Check if admin
         private bool IsAdmin() =>
             HttpContext.Session.GetString("UserRole") == "Admin";
 
@@ -30,6 +29,7 @@ namespace HealthcareCRM.Controllers
 
         // POST: /Admin/ChangeRole
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeRole(int id, string role)
         {
             if (!IsAdmin())
@@ -38,10 +38,71 @@ namespace HealthcareCRM.Controllers
             var user = await _context.Users.FindAsync(id);
             if (user == null) return NotFound();
 
+            var oldRole = user.Role;
             user.Role = role;
             await _context.SaveChangesAsync();
+
+            // Log the action
+            await LogAction("ChangeRole", "User", id,
+                $"Changed role from {oldRole} to {role} for {user.FullName}");
+
             TempData["Success"] = $"Role updated to {role} successfully.";
             return RedirectToAction("Index");
+        }
+
+        // POST: /Admin/ToggleActive
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToggleActive(int id)
+        {
+            if (!IsAdmin())
+                return RedirectToAction("AccessDenied", "Account");
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null) return NotFound();
+
+            user.IsActive = !user.IsActive;
+            await _context.SaveChangesAsync();
+
+            // Log the action
+            await LogAction(user.IsActive ? "Activate" : "Deactivate", "User", id,
+                $"{(user.IsActive ? "Activated" : "Deactivated")} account for {user.FullName}");
+
+            TempData["Success"] = user.IsActive
+                ? "User account activated."
+                : "User account deactivated.";
+            return RedirectToAction("Index");
+        }
+
+        // GET: /Admin/AuditLog
+        public async Task<IActionResult> AuditLog()
+        {
+            if (!IsAdmin())
+                return RedirectToAction("AccessDenied", "Account");
+
+            var logs = await _context.AuditLogs
+                .OrderByDescending(a => a.Timestamp)
+                .ToListAsync();
+
+            return View(logs);
+        }
+
+        // Helper: Log admin actions
+        private async Task LogAction(string action, string targetType, int targetId, string details)
+        {
+            var adminId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            var log = new AuditLog
+            {
+                UserId = adminId,
+                Action = action,
+                TargetType = targetType,
+                TargetId = targetId,
+                Details = details
+            };
+
+            _context.AuditLogs.Add(log);
+            await _context.SaveChangesAsync();
         }
     }
 }

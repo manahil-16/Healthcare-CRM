@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\urooj\\Downloads\\Healthcare-CRM-main\\Healthcare-CRM-main\\HealthcareCRM\\HealthcareCRM.csproj": {}
+    "C:\\Users\\urooj\\Downloads\\Healthcare-CRM\\HealthcareCRM\\HealthcareCRM.csproj": {}
   },
   "projects": {
-    "C:\\Users\\urooj\\Downloads\\Healthcare-CRM-main\\Healthcare-CRM-main\\HealthcareCRM\\HealthcareCRM.csproj": {
+    "C:\\Users\\urooj\\Downloads\\Healthcare-CRM\\HealthcareCRM\\HealthcareCRM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM-main\\Healthcare-CRM-main\\HealthcareCRM\\HealthcareCRM.csproj",
+        "projectUniqueName": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM\\HealthcareCRM\\HealthcareCRM.csproj",
         "projectName": "HealthcareCRM",
-        "projectPath": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM-main\\Healthcare-CRM-main\\HealthcareCRM\\HealthcareCRM.csproj",
+        "projectPath": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM\\HealthcareCRM\\HealthcareCRM.csproj",
         "packagesPath": "C:\\Users\\urooj\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM-main\\Healthcare-CRM-main\\HealthcareCRM\\obj\\",
+        "outputPath": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM\\HealthcareCRM\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

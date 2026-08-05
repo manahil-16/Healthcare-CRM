@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iJx3f4+qkX0=",
+  "dgSpecHash": "giMV3SmQw+4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM-main\\Healthcare-CRM-main\\HealthcareCRM\\HealthcareCRM.csproj",
+  "projectFilePath": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM\\HealthcareCRM\\HealthcareCRM.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\urooj\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\urooj\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

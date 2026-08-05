@@ -19,6 +19,7 @@
             <h2 class="fw-bold mb-1">⚙️ Admin Panel</h2>
             <p class="text-muted">Manage user roles and access</p>
         </div>
+        <a asp-action="AuditLog" class="btn btn-outline-secondary">📋 View Audit Log</a>
     </div>
 
     <div class="card">
@@ -31,6 +32,7 @@
                             <th>Full Name</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Status</th>
                             <th>Registered On</th>
                             <th>Actions</th>
                         </tr>
@@ -39,7 +41,7 @@
                         @if (!Model.Any())
                         {
                             <tr>
-                                <td colspan="6" class="text-center p-4 text-muted">
+                                <td colspan="7" class="text-center p-4 text-muted">
                                     No users found.
                                 </td>
                             </tr>
@@ -55,28 +57,44 @@
                                         @user.Role
                                     </span>
                                 </td>
+                                <td>
+                                    @if (user.IsActive)
+                                    {
+                                        <span class="badge bg-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Deactivated</span>
+                                    }
+                                </td>
                                 <td>@user.CreatedAt.ToString("dd MMM yyyy")</td>
                                 <td>
                                     @if (user.Role == "Staff")
                                     {
                                         <form asp-action="ChangeRole" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
                                             <input type="hidden" name="id" value="@user.Id" />
                                             <input type="hidden" name="role" value="Admin" />
-                                            <button class="btn btn-sm btn-warning">
-                                                Make Admin
-                                            </button>
+                                            <button class="btn btn-sm btn-warning">Make Admin</button>
                                         </form>
                                     }
                                     else
                                     {
                                         <form asp-action="ChangeRole" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
                                             <input type="hidden" name="id" value="@user.Id" />
                                             <input type="hidden" name="role" value="Staff" />
-                                            <button class="btn btn-sm btn-secondary">
-                                                Make Staff
-                                            </button>
+                                            <button class="btn btn-sm btn-secondary">Make Staff</button>
                                         </form>
                                     }
+
+                                    <form asp-action="ToggleActive" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@user.Id" />
+                                        <button class="btn btn-sm @(user.IsActive ? "btn-danger" : "btn-success")">
+                                            @(user.IsActive ? "Deactivate" : "Activate")
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         }
