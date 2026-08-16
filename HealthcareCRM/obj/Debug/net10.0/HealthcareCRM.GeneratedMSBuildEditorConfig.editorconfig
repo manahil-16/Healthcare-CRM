@@ -19,109 +19,109 @@ build_property.TargetFrameworkIdentifier = .NETCoreApp
 build_property.TargetFrameworkVersion = v10.0
 build_property.RootNamespace = HealthcareCRM
 build_property.RootNamespace = HealthcareCRM
-build_property.ProjectDir = C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM\
+build_property.ProjectDir = C:\Users\urooj\Downloads\Healthcare-CRM.worktrees\final-integration-demo-prep\HealthcareCRM\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\urooj\OneDrive\Desktop\HealthcareCRM\HealthcareCRM
+build_property.MSBuildProjectDirectory = C:\Users\urooj\Downloads\Healthcare-CRM.worktrees\final-integration-demo-prep\HealthcareCRM
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Account/AccessDenied.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Account/Login.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Account/Register.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Admin/Index.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Appointment/Create.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Appointment/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwb2ludG1lbnRcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Appointment/Edit.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Appointment/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwb2ludG1lbnRcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Appointment/Index.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Appointment/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwb2ludG1lbnRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Appointment/_AppointmentForm.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Appointment/_AppointmentForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwb2ludG1lbnRcX0FwcG9pbnRtZW50Rm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Dashboard/Index.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Doctor/Create.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Doctor/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Doctor/Edit.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Doctor/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Doctor/Index.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Doctor/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdG9yXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Home/Index.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Home/Privacy.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Patient/Create.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Patient/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Patient/Delete.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Patient/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Patient/Details.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Patient/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Patient/Edit.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Patient/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Patient/Index.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Patient/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Shared/Error.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/_ViewImports.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/_ViewStart.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/urooj/OneDrive/Desktop/HealthcareCRM/HealthcareCRM/Views/Shared/_Layout.cshtml]
+[C:/Users/urooj/Downloads/Healthcare-CRM.worktrees/final-integration-demo-prep/HealthcareCRM/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-62qijccnu7
