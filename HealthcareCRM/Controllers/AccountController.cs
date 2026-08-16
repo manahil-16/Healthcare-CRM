@@ -47,7 +47,8 @@ namespace HealthcareCRM.Controllers
                 FullName = model.FullName,
                 Email = model.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
-                Role = "Staff" // Default role is Staff
+                Role = "Staff", // Default role is Staff
+                IsActive = true
             };
 
             _context.Users.Add(user);
@@ -69,6 +70,12 @@ namespace HealthcareCRM.Controllers
             if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
             {
                 ModelState.AddModelError("", "Invalid email or password");
+                return View(model);
+            }
+
+            if (!user.IsActive)
+            {
+                ModelState.AddModelError("", "This account has been deactivated. Please contact the administrator.");
                 return View(model);
             }
 

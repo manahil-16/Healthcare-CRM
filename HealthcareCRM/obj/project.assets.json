@@ -3653,11 +3653,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\urooj\\OneDrive\\Desktop\\HealthcareCRM\\HealthcareCRM\\HealthcareCRM.csproj",
+      "projectUniqueName": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM.worktrees\\final-integration-demo-prep\\HealthcareCRM\\HealthcareCRM.csproj",
       "projectName": "HealthcareCRM",
-      "projectPath": "C:\\Users\\urooj\\OneDrive\\Desktop\\HealthcareCRM\\HealthcareCRM\\HealthcareCRM.csproj",
+      "projectPath": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM.worktrees\\final-integration-demo-prep\\HealthcareCRM\\HealthcareCRM.csproj",
       "packagesPath": "C:\\Users\\urooj\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\urooj\\OneDrive\\Desktop\\HealthcareCRM\\HealthcareCRM\\obj\\",
+      "outputPath": "C:\\Users\\urooj\\Downloads\\Healthcare-CRM.worktrees\\final-integration-demo-prep\\HealthcareCRM\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

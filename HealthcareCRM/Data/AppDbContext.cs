@@ -14,6 +14,7 @@ namespace HealthcareCRM.Data
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<AuditLog> AuditLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +34,14 @@ namespace HealthcareCRM.Data
 
             modelBuilder.Entity<Doctor>()
                 .Property(d => d.ScheduleDays)
+                .HasMaxLength(100);
+
+            modelBuilder.Entity<AuditLog>()
+                .Property(a => a.Action)
+                .HasMaxLength(100);
+
+            modelBuilder.Entity<AuditLog>()
+                .Property(a => a.EntityType)
                 .HasMaxLength(100);
         }
     }

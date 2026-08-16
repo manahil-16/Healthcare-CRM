@@ -17,7 +17,32 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2 class="fw-bold mb-1">⚙️ Admin Panel</h2>
-            <p class="text-muted">Manage user roles and access</p>
+            <p class="text-muted">Manage user roles, access, and operational activity</p>
+        </div>
+        <a asp-action="ExportUsers" class="btn btn-outline-primary">Export Users CSV</a>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <strong>Recent activity</strong>
+        </div>
+        <div class="card-body">
+            @if (ViewBag.RecentAuditLogs != null && ((IEnumerable<HealthcareCRM.Models.AuditLog>)ViewBag.RecentAuditLogs).Any())
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var log in (IEnumerable<HealthcareCRM.Models.AuditLog>)ViewBag.RecentAuditLogs)
+                    {
+                        <li class="list-group-item">
+                            <strong>@log.Action</strong> • @log.PerformedBy • @log.CreatedAt.ToString("dd MMM yyyy, HH:mm")
+                            <div class="text-muted small">@log.Details</div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted mb-0">No audit activity has been recorded yet.</p>
+            }
         </div>
     </div>
 
@@ -31,6 +56,7 @@
                             <th>Full Name</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Status</th>
                             <th>Registered On</th>
                             <th>Actions</th>
                         </tr>
@@ -39,7 +65,7 @@
                         @if (!Model.Any())
                         {
                             <tr>
-                                <td colspan="6" class="text-center p-4 text-muted">
+                                <td colspan="7" class="text-center p-4 text-muted">
                                     No users found.
                                 </td>
                             </tr>
@@ -53,6 +79,11 @@
                                 <td>
                                     <span class="badge bg-@(user.Role == "Admin" ? "warning text-dark" : "secondary")">
                                         @user.Role
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-@(user.IsActive ? "success" : "danger")">
+                                        @(user.IsActive ? "Active" : "Inactive")
                                     </span>
                                 </td>
                                 <td>@user.CreatedAt.ToString("dd MMM yyyy")</td>
@@ -77,6 +108,13 @@
                                             </button>
                                         </form>
                                     }
+
+                                    <form asp-action="ToggleUserStatus" method="post" class="d-inline ms-1">
+                                        <input type="hidden" name="id" value="@user.Id" />
+                                        <button class="btn btn-sm @(user.IsActive ? "btn-outline-danger" : "btn-outline-success")">
+                                            @(user.IsActive ? "Deactivate" : "Activate")
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         }
