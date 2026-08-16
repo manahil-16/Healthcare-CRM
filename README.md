@@ -1,99 +1,129 @@
-# Healthcare-CRM
+Healthcare CRM
+Healthcare CRM is a healthcare management web application built with ASP.NET Core MVC and Entity Framework Core. It is designed to support patient management, doctor records, appointment scheduling, dashboard analytics, and administrative workflows for a clinic or healthcare operations team.
 
-Healthcare-CRM is a .NET MVC clinic management application for managing patients, doctors, appointments, dashboard analytics, and admin access in a healthcare workflow.
+This project provides a complete local demo setup for the Track A web app and is intended to run easily in Visual Studio Code.
 
-## Included features
+Overview
+The application includes the core healthcare CRM workflows needed for a working demo:
 
-The current project already contains the core Track A features:
+secure login and registration
+staff/admin role separation
+patient CRUD operations
+patient search and pagination
+doctor listing and status management
+appointment booking and management
+dashboard overview
+admin controls and audit tracking
+seeded demo data
+Swagger API documentation
+Tech Stack
+ASP.NET Core MVC
+.NET 10
+Entity Framework Core
+SQL Server / LocalDB
+Razor Views
+Bootstrap
+Swagger / OpenAPI
+Features
+Authentication and Authorization
+Login and registration workflows
+Session-based authentication
+Admin and staff role assignment
+Access control for admin-only pages
+Patient Management
+Add, view, edit, and delete patients
+Search by name, phone number, or date of birth
+Pagination for large patient lists
+Patient detail views and validation handling
+Doctor Management
+Doctor directory and basic status tracking
+Active/inactive doctor logic
+Listing support for Track A demo operations
+Appointments
+Book appointments against patient and doctor records
+View appointment status updates
+Track appointment notes and scheduling data
+Admin Panel
+Change user roles
+Activate or deactivate accounts
+Export user records as CSV
+Review recent activity audit log
+API Documentation
+Swagger UI is enabled at /swagger
+Core patient and doctor endpoints are exposed for testing and demo use
+Default Demo Accounts
+The app seeds default accounts automatically on first run.
 
-- Login and registration
-- Session-based authentication
-- Admin and Staff roles
-- Patient management with CRUD and search
-- Patient API endpoints with pagination and filter support
-- Doctor list, create, edit, and active/inactive controls
-- Appointment booking and status management
-- Dashboard stats endpoint and UI
-- Admin user role management
-- Swagger API documentation
-- EF Core database setup and migrations
-- Seeded demo data and default admin credentials
+Admin
+Email: admin@healthcarecrm.com
+Password: Admin@123
+Staff
+Email: staff@healthcarecrm.com
+Password: Staff@123
+Project Structure
+HealthcareCRM/
+├── Controllers/         # MVC and API controllers
+├── Data/                # DbContext and seed logic
+├── Models/              # Domain and view models
+├── Migrations/          # EF Core migrations
+├── Views/               # Razor UI pages
+├── wwwroot/             # Static frontend assets
+├── appsettings.json     # App configuration
+├── Program.cs           # Startup and DB bootstrap
+├── HealthcareCRM.csproj # Project configuration
+└── README.md            # Project documentation
+Prerequisites
+Before running the project, ensure the following are installed:
 
-## Default admin account
+.NET 10 SDK
+SQL Server LocalDB or SQL Server Express
+Visual Studio Code
+C# extension for VS Code
+Getting Started
+Open the project folder in VS Code.
+Open a terminal in the project directory.
+Restore packages:
+cd HealthcareCRM
+dotnet restore
+Build the project:
+dotnet build
+Run the app:
+dotnet run --urls http://localhost:5137
+Open the app in your browser:
+http://localhost:5137
+Open Swagger UI:
+http://localhost:5137/swagger
+Database Configuration
+The app uses SQL Server LocalDB by default. Update the connection string in HealthcareCRM/appsettings.json if you are using a different SQL Server instance.
 
-The app seeds a default administrator on first run:
+On first run, the application creates the database if needed and populates the database with demo data.
 
-- Email: `admin@healthcarecrm.com`
-- Password: `Admin@123`
+Running Notes
+The app is designed to run locally in VS Code.
+If the app is already running and the exe is locked, stop the old HealthcareCRM process before restarting.
+The database is seeded with sample patients, doctors, appointments, and users for demonstration purposes.
+Demo Flow
+A professional demo can follow this flow:
 
-This makes it easy to log in immediately in VS Code and demonstrate the admin panel.
+Log in as admin
+Open the dashboard
+Review patient list
+Search for a patient
+Create a new patient
+Edit patient details
+Delete a patient after confirmation
+Show the doctor list
+Open the admin panel
+Show API docs in Swagger
+Sprint Status
+This project is a working Track A healthcare CRM web application with the core features implemented and locally validated.
 
-## Prerequisites
+Completed elements include:
 
-- .NET 10 SDK
-- SQL Server LocalDB or SQL Server Express
-- Visual Studio Code
-- C# extension for VS Code
-
-## Run in VS Code
-
-1. Open the repository folder in VS Code.
-2. Open a terminal at the project root.
-3. Restore NuGet packages:
-
-   `cd HealthcareCRM`
-   `dotnet restore`
-
-4. Build the app:
-
-   `dotnet build`
-
-5. Make sure the connection string is valid for your machine. The default project setting is:
-
-   `Server=(localdb)\MSSQLLocalDB;Database=HealthcareCRM;Trusted_Connection=True;TrustServerCertificate=True;`
-
-   If you use a different SQL Server instance, update the value in `HealthcareCRM/appsettings.json`.
-
-6. Apply database migrations and seed data:
-
-   `dotnet ef database update`
-
-7. Run the app:
-
-   `dotnet watch run --launch-profile http`
-
-   or
-
-   `dotnet run --launch-profile http`
-
-8. Open the app in the browser:
-
-   `http://localhost:5137`
-
-9. Open Swagger UI:
-
-   `http://localhost:5137/swagger`
-
-## Project structure
-
-- `HealthcareCRM/Controllers/` – MVC controllers and APIs
-- `HealthcareCRM/Models/` – domain models and view models
-- `HealthcareCRM/Data/` – EF Core database context and seed logic
-- `HealthcareCRM/Views/` – Razor pages for UI
-- `HealthcareCRM/Migrations/` – EF Core migrations
-- `HealthcareCRM/wwwroot/` – front-end assets
-
-## Notes
-
-- The app uses SQL Server, not SQLite.
-- The local database is created automatically if the connection is valid.
-- The project has been verified to build and run locally in the current environment.
-- The seed data creates admin, patients, doctors, and sample appointments so the dashboard and appointment pages are populated immediately.
-
-## Common tasks
-
-- Create patient: `/Patient/Create`
-- View patients: `/Patient`
-- View appointments: `/Appointment`
-- Dashboard: `/Dashboard`
-- Admin panel: `/Admin`
+authentication and access control
+patient management
+patient filtering and pagination
+doctor module base setup
+admin controls
+startup and database repair logic
+seeded demo data
